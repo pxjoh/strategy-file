@@ -13,7 +13,7 @@ const SPORT_QUERIES: Record<string, string> = {
   betting: '("sports betting" OR sportsbook OR "betting odds") -is:retweet lang:en',
 };
 
-const CACHE_TTL = 60 * 60; // 60 minutes
+const CACHE_TTL = 4 * 60 * 60; // 4 hours - significantly reduce API calls
 
 export async function GET(req: NextRequest) {
   const topic = req.nextUrl.searchParams.get('topic') ?? 'nba';
@@ -25,17 +25,21 @@ export async function GET(req: NextRequest) {
   const cacheKey = `tweets:sports:${topic}`;
   const cached = await cacheGet<Tweet[]>(cacheKey);
   if (cached) {
-    return NextResponse.json({ tweets: cached, fromCache: true });
+    const response = NextResponse.json({ tweets: cached, fromCache: true });
+    response.headers.set('Cache-Control', 'public, s-maxage=14400, stale-while-revalidate=3600');
+    return response;
   }
 
   try {
-    // Fetch 100 tweets from 12h ago to 1h ago, return top 20 by engagement
-    const tweets = await searchRecentTweets(SPORT_QUERIES[topic], 100, 12, 1);
+    // Fetch 50 tweets from 6h ago to 1h ago, return top 20 by engagement (reduced to save API costs)
+    const tweets = await searchRecentTweets(SPORT_QUERIES[topic], 50, 6, 1);
     const sorted = tweets
       .sort((a, b) => (b.metrics.likes + b.metrics.retweets) - (a.metrics.likes + a.metrics.retweets))
       .slice(0, 20);
     await cacheSet(cacheKey, sorted, CACHE_TTL);
-    return NextResponse.json({ tweets: sorted, fromCache: false });
+    const response = NextResponse.json({ tweets: sorted, fromCache: false });
+    response.headers.set('Cache-Control', 'public, s-maxage=14400, stale-while-revalidate=3600');
+    return response;
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown error';
     return NextResponse.json({ error: message }, { status: 500 });

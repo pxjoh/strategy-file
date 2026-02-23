@@ -13,14 +13,14 @@ const SPORT_QUERIES: Record<string, string> = {
   betting: '("sports betting" OR sportsbook OR "betting odds") -is:retweet lang:en',
 };
 
-const CACHE_TTL = 60 * 60; // 60 minutes
+const CACHE_TTL = 4 * 60 * 60; // 4 hours - significantly reduce API calls
 
 async function fetchSport(topic: string): Promise<Tweet[]> {
   const cacheKey = `tweets:sports:${topic}`;
   const cached = await cacheGet<Tweet[]>(cacheKey);
   if (cached) return cached;
 
-  const tweets = await searchRecentTweets(SPORT_QUERIES[topic], 100, 12, 1);
+  const tweets = await searchRecentTweets(SPORT_QUERIES[topic], 50, 6, 1); // Reduced from 100 to 50, 12h to 6h
   const sorted = tweets
     .sort((a, b) => (b.metrics.likes + b.metrics.retweets) - (a.metrics.likes + a.metrics.retweets))
     .slice(0, 20);
@@ -53,7 +53,10 @@ export async function GET() {
       .sort((a, b) => (b.metrics.likes + b.metrics.retweets) - (a.metrics.likes + a.metrics.retweets))
       .slice(0, 30);
 
-    return NextResponse.json({ tweets: top30 });
+    const response = NextResponse.json({ tweets: top30 });
+    // Add cache headers to reduce unnecessary requests
+    response.headers.set('Cache-Control', 'public, s-maxage=14400, stale-while-revalidate=3600');
+    return response;
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown error';
     return NextResponse.json({ error: message }, { status: 500 });

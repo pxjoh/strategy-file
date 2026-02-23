@@ -4,13 +4,15 @@ import { cacheGet, cacheSet } from '@/lib/cache';
 import type { Tweet } from '@/lib/twitter';
 
 const COMPETITOR_HANDLES = ['DraftKings', 'FanDuel', 'Kalshi', 'Polymarket', 'NovigSports'];
-const CACHE_TTL = 30 * 60; // 30 minutes
+const CACHE_TTL = 2 * 60 * 60; // 2 hours - reduce API calls for competitors
 
 export async function GET() {
   const cacheKey = 'tweets:competitors';
   const cached = await cacheGet<Tweet[]>(cacheKey);
   if (cached) {
-    return NextResponse.json({ tweets: cached, fromCache: true });
+    const response = NextResponse.json({ tweets: cached, fromCache: true });
+    response.headers.set('Cache-Control', 'public, s-maxage=7200, stale-while-revalidate=1800');
+    return response;
   }
 
   try {
@@ -36,7 +38,9 @@ export async function GET() {
     );
 
     await cacheSet(cacheKey, sorted, CACHE_TTL);
-    return NextResponse.json({ tweets: sorted, fromCache: false });
+    const response = NextResponse.json({ tweets: sorted, fromCache: false });
+    response.headers.set('Cache-Control', 'public, s-maxage=7200, stale-while-revalidate=1800');
+    return response;
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown error';
     return NextResponse.json({ error: message }, { status: 500 });
