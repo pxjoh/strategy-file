@@ -54,9 +54,12 @@ function apiUrl(tab: Tab, sport: string): string {
 
 export default function Feed({ tab, sport }: FeedProps) {
   const url = apiUrl(tab, sport);
-  const { data, error, isLoading } = useSWR<{ tweets: Tweet[]; error?: string }>(url, fetcher, {
+  const { data, error, isLoading, mutate } = useSWR<{ tweets: Tweet[]; error?: string }>(url, fetcher, {
     revalidateOnFocus: false,
-    dedupingInterval: 5 * 60 * 1000, // 5 minutes
+    revalidateOnReconnect: false,
+    revalidateIfStale: false,
+    revalidateOnMount: true, // Only fetch once on initial mount
+    dedupingInterval: Infinity, // Never auto-revalidate
   });
 
   if (isLoading) {
@@ -84,10 +87,18 @@ export default function Feed({ tab, sport }: FeedProps) {
   }
 
   return (
-    <div className="mt-4 space-y-3">
-      {tweets.map((tweet) => (
-        <TweetCard key={tweet.id} tweet={tweet} />
-      ))}
+    <div className="mt-4">
+      <button
+        onClick={() => mutate()}
+        className="mb-4 px-4 py-2 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-lg text-sm text-zinc-300 hover:text-white transition-colors"
+      >
+        🔄 Refresh Feed
+      </button>
+      <div className="space-y-3">
+        {tweets.map((tweet) => (
+          <TweetCard key={tweet.id} tweet={tweet} />
+        ))}
+      </div>
     </div>
   );
 }

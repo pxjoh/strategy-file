@@ -88,6 +88,16 @@ export async function searchRecentTweets(
 
   if (!res.ok) {
     const body = await res.text();
+    if (res.status === 402) {
+      try {
+        const errorData = JSON.parse(body);
+        if (errorData.title === 'CreditsDepleted') {
+          throw new Error('X API credits depleted. Please add credits to your Twitter Developer account at https://developer.twitter.com/en/portal/dashboard');
+        }
+      } catch {
+        // If parsing fails, fall through to generic error
+      }
+    }
     throw new Error(`X API search error ${res.status}: ${body}`);
   }
 
@@ -111,6 +121,16 @@ export async function getUserIdsByUsernames(usernames: string[]): Promise<Map<st
 
   if (!res.ok) {
     const body = await res.text();
+    if (res.status === 402) {
+      try {
+        const errorData = JSON.parse(body);
+        if (errorData.title === 'CreditsDepleted') {
+          throw new Error('X API credits depleted. Please add credits to your Twitter Developer account at https://developer.twitter.com/en/portal/dashboard');
+        }
+      } catch {
+        // If parsing fails, fall through to generic error
+      }
+    }
     throw new Error(`X API users/by error ${res.status}: ${body}`);
   }
 
@@ -138,6 +158,16 @@ export async function getUserTweets(userId: string, maxResults = 10): Promise<Tw
 
   if (!res.ok) {
     const body = await res.text();
+    if (res.status === 402) {
+      try {
+        const errorData = JSON.parse(body);
+        if (errorData.title === 'CreditsDepleted') {
+          throw new Error('X API credits depleted. Please add credits to your Twitter Developer account at https://developer.twitter.com/en/portal/dashboard');
+        }
+      } catch {
+        // If parsing fails, fall through to generic error
+      }
+    }
     throw new Error(`X API user tweets error ${res.status}: ${body}`);
   }
 
