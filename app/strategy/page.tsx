@@ -22,9 +22,9 @@ export default function StrategyPage() {
           --surface:     #151C2C;
           --surface-2:   #1A2235;
           --border:      #2A3548;
-          --text:        #F8FAFC;
-          --text-2:      #94A3B8;
-          --text-3:      #4B5563;
+          --text:        #FFFFFF;
+          --text-2:      #FFFFFF;
+          --text-3:      #FFFFFF;
           --radius:      12px;
           --shadow:      0 1px 3px rgba(0,0,0,.4), 0 4px 16px rgba(0,0,0,.25);
           --shadow-lg:   0 4px 24px rgba(0,0,0,.5);
