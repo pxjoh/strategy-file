@@ -10,25 +10,27 @@ export default function StrategyPage() {
   return (
     <>
       <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600;700&display=swap');
+
         .strat-root *, .strat-root *::before, .strat-root *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         .strat-root {
-          --blue:       #2563EB;
-          --blue-light: #DBEAFE;
-          --blue-dark:  #1E40AF;
-          --bg:         #FFFFFF;
-          --surface:    #F8FAFC;
-          --surface-2:  #F1F5F9;
-          --border:     #E2E8F0;
-          --text:       #0F172A;
-          --text-2:     #475569;
-          --text-3:     #94A3B8;
-          --radius:     12px;
-          --shadow:     0 1px 3px rgba(0,0,0,.07), 0 4px 16px rgba(0,0,0,.04);
-          --shadow-lg:  0 4px 24px rgba(0,0,0,.10);
-          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-          background: #ffffff;
-          color: #0F172A;
+          --green:       #4ADE80;
+          --green-light: rgba(74,222,128,.12);
+          --green-dark:  #22C55E;
+          --bg:          #0E1420;
+          --surface:     #151C2C;
+          --surface-2:   #1A2235;
+          --border:      #2A3548;
+          --text:        #F8FAFC;
+          --text-2:      #94A3B8;
+          --text-3:      #4B5563;
+          --radius:      12px;
+          --shadow:      0 1px 3px rgba(0,0,0,.4), 0 4px 16px rgba(0,0,0,.25);
+          --shadow-lg:   0 4px 24px rgba(0,0,0,.5);
+          font-family: 'Barlow', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+          background: var(--bg);
+          color: var(--text);
           line-height: 1.6;
           min-height: 100vh;
         }
@@ -36,7 +38,7 @@ export default function StrategyPage() {
         /* NAV */
         .strat-nav {
           position: sticky; top: 0; z-index: 100;
-          background: rgba(255,255,255,.95);
+          background: rgba(14,20,32,.97);
           backdrop-filter: blur(12px);
           -webkit-backdrop-filter: blur(12px);
           border-bottom: 1px solid var(--border);
@@ -44,35 +46,37 @@ export default function StrategyPage() {
           padding: 0 48px; height: 64px;
         }
         .strat-brand {
-          font-size: 20px; font-weight: 800; letter-spacing: -.5px;
+          font-family: 'Barlow Condensed', sans-serif;
+          font-size: 22px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
           color: var(--text); display: flex; align-items: center; gap: 2px;
         }
-        .strat-brand .x { color: var(--blue); }
+        .strat-brand .x { color: var(--green); }
         .strat-navlinks { display: flex; gap: 4px; list-style: none; }
         .strat-navlinks a {
           text-decoration: none; color: var(--text-2); font-size: 14px; font-weight: 500;
           padding: 6px 14px; border-radius: 8px; transition: all .15s;
         }
         .strat-navlinks a:hover { background: var(--surface-2); color: var(--text); }
-        .strat-navlinks a.active { background: var(--blue-light); color: var(--blue); }
+        .strat-navlinks a.active { background: var(--green-light); color: var(--green); }
 
         /* HERO */
         .strat-hero {
-          background: linear-gradient(145deg, #F0F6FF 0%, #EFF6FF 60%, #F8FAFC 100%);
+          background: linear-gradient(145deg, #080d17 0%, #0e1420 60%, #111827 100%);
           border-bottom: 1px solid var(--border);
           padding: 96px 48px 88px; text-align: center;
         }
         .strat-eyebrow {
           display: inline-flex; align-items: center; gap: 6px;
-          background: var(--blue-light); color: var(--blue);
+          background: var(--green-light); color: var(--green);
           font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
           padding: 4px 14px; border-radius: 100px; margin-bottom: 24px;
         }
         .strat-hero h1 {
-          font-size: 52px; font-weight: 800; letter-spacing: -2px; line-height: 1.1;
+          font-family: 'Barlow Condensed', sans-serif;
+          font-size: 64px; font-weight: 800; letter-spacing: 1px; line-height: 1.05; text-transform: uppercase;
           margin-bottom: 18px; color: var(--text);
         }
-        .strat-hero h1 em { font-style: normal; color: var(--blue); }
+        .strat-hero h1 em { font-style: normal; color: var(--green); }
         .strat-hero p { font-size: 18px; color: var(--text-2); max-width: 520px; margin: 0 auto; }
 
         /* LAYOUT */
@@ -80,9 +84,13 @@ export default function StrategyPage() {
         .strat-section-header { margin-bottom: 52px; }
         .strat-section-eyebrow {
           font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
-          color: var(--blue); margin-bottom: 10px; display: block;
+          color: var(--green); margin-bottom: 10px; display: block;
         }
-        .strat-section-title { font-size: 34px; font-weight: 800; letter-spacing: -.5px; margin-bottom: 10px; color: var(--text); }
+        .strat-section-title {
+          font-family: 'Barlow Condensed', sans-serif;
+          font-size: 38px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
+          margin-bottom: 10px; color: var(--text);
+        }
         .strat-section-desc { font-size: 16px; color: var(--text-2); max-width: 600px; }
 
         /* PLATFORM BLOCK */
@@ -93,9 +101,9 @@ export default function StrategyPage() {
           display: flex; align-items: center; justify-content: center;
           font-size: 20px; flex-shrink: 0;
         }
-        .strat-plat-icon.x        { background: #000; color: #fff; font-weight: 800; font-size: 15px; }
+        .strat-plat-icon.x        { background: #fff; color: #000; font-weight: 800; font-size: 15px; }
         .strat-plat-icon.ig       { background: linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); color: #fff; }
-        .strat-plat-icon.partners { background: var(--blue); color: #fff; }
+        .strat-plat-icon.partners { background: var(--green); color: #0E1420; }
         .strat-plat-title { font-size: 22px; font-weight: 700; color: var(--text); }
         .strat-plat-sub   { font-size: 14px; color: var(--text-2); margin-top: 2px; }
         .strat-platform-sep { border: none; border-top: 1px solid var(--border); margin: 64px 0; }
@@ -115,11 +123,12 @@ export default function StrategyPage() {
         .strat-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
         .strat-card::before {
           content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-          background: var(--blue);
+          background: var(--green);
         }
         .strat-card-pct {
-          font-size: 38px; font-weight: 800; color: var(--blue);
-          letter-spacing: -1.5px; line-height: 1; margin-bottom: 4px;
+          font-family: 'Barlow Condensed', sans-serif;
+          font-size: 42px; font-weight: 800; color: var(--green);
+          letter-spacing: -1px; line-height: 1; margin-bottom: 4px;
         }
         .strat-card-title { font-size: 17px; font-weight: 700; margin-bottom: 18px; color: var(--text); }
 
@@ -147,7 +156,7 @@ export default function StrategyPage() {
         .strat-body li { margin-bottom: 4px; }
         .strat-body strong { color: var(--text); font-weight: 600; }
         .strat-callout {
-          background: var(--blue-light); color: var(--blue-dark);
+          background: var(--green-light); color: var(--green);
           padding: 11px 14px; border-radius: 8px;
           font-size: 13px; font-weight: 500; line-height: 1.6; margin-top: 14px;
         }
@@ -162,8 +171,9 @@ export default function StrategyPage() {
         }
         .strat-month-marker { text-align: center; position: relative; z-index: 2; margin: 8px 0 28px; }
         .strat-month-label {
-          display: inline-block; background: var(--text); color: #fff;
-          font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+          display: inline-block; background: var(--green); color: #0E1420;
+          font-family: 'Barlow Condensed', sans-serif;
+          font-size: 12px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
           padding: 5px 18px; border-radius: 100px;
         }
         .strat-t-event { display: flex; align-items: flex-start; margin-bottom: 28px; position: relative; }
@@ -178,23 +188,23 @@ export default function StrategyPage() {
         .strat-dot {
           position: absolute; left: 50%; transform: translateX(-50%);
           width: 14px; height: 14px;
-          background: var(--blue); border-radius: 50%;
-          border: 3px solid var(--bg);
-          box-shadow: 0 0 0 2px var(--blue);
+          background: var(--green); border-radius: 50%;
+          border: 3px solid var(--surface);
+          box-shadow: 0 0 0 2px var(--green);
           top: 22px; z-index: 2;
         }
-        .strat-e-date  { font-size: 11px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(--blue); margin-bottom: 5px; }
+        .strat-e-date  { font-size: 11px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(--green); margin-bottom: 5px; }
         .strat-e-title { font-size: 16px; font-weight: 700; margin-bottom: 10px; color: var(--text); }
         .strat-badge {
           display: inline-flex; align-items: center; gap: 4px;
           font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 100px; margin-bottom: 12px;
         }
-        .strat-b-baseball { background: #FEF9C3; color: #854D0E; }
-        .strat-b-college  { background: #FFF7ED; color: #9A3412; }
-        .strat-b-football { background: #DBEAFE; color: #1E40AF; }
-        .strat-b-golf     { background: #DCFCE7; color: #166534; }
-        .strat-b-nba      { background: #FEE2E2; color: #991B1B; }
-        .strat-b-hockey   { background: #F3E8FF; color: #6B21A8; }
+        .strat-b-baseball { background: rgba(253,224,71,.12);  color: #FDE047; }
+        .strat-b-college  { background: rgba(251,146,60,.12);  color: #FB923C; }
+        .strat-b-football { background: rgba(96,165,250,.12);  color: #60A5FA; }
+        .strat-b-golf     { background: rgba(74,222,128,.12);  color: #4ADE80; }
+        .strat-b-nba      { background: rgba(248,113,113,.12); color: #F87171; }
+        .strat-b-hockey   { background: rgba(192,132,252,.12); color: #C084FC; }
         .strat-e-body { font-size: 13px; color: var(--text-2); line-height: 1.65; }
         .strat-e-body p { margin-bottom: 8px; }
         .strat-e-body ul { padding-left: 14px; margin-top: 6px; margin-bottom: 6px; }
@@ -214,7 +224,7 @@ export default function StrategyPage() {
         @media (max-width: 800px) {
           .strat-nav { padding: 0 20px; }
           .strat-hero { padding: 64px 24px; }
-          .strat-hero h1 { font-size: 36px; }
+          .strat-hero h1 { font-size: 42px; }
           .strat-container { padding: 56px 24px; }
           .strat-grid-2, .strat-grid-3, .strat-grid-2x2 { grid-template-columns: 1fr; }
           .strat-timeline::before { left: 20px; }
