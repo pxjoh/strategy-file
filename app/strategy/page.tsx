@@ -482,6 +482,19 @@ export default function StrategyPage() {
                   <p>For us, it is scalable, efficient, and aligned with CPA structure.</p>
                   <p>We should continue leaning into this channel.</p>
                 </ImgCard>
+                <ImgCard title="Selective Flat Fee & Cash Drops — Brand Ambassador Pipeline" media={null}>
+                  <p>We will still do flat fee deals and cash drops in 2026 — but they will be rare and highly intentional.</p>
+                  <p>This is not a volume play. It is a targeting play.</p>
+                  <p>The criteria is simple:</p>
+                  <ul>
+                    <li>Influencers with a large, engaged, and sports-betting-aligned audience</li>
+                    <li>Influencers whose personal brand is a natural fit with ProphetX</li>
+                    <li>Influencers who have the potential to become long-term brand ambassadors</li>
+                  </ul>
+                  <p>The goal of these deals is not just a single post. It is to identify the right people and build a real relationship with them.</p>
+                  <p>A well-placed flat fee deal with the right influencer can convert at a level that justifies the spend — and more importantly, it opens the door to an ongoing ambassador relationship that pays dividends well beyond the initial activation.</p>
+                  <p>This is our paid influencer strategy for 2026. Selective, strategic, and focused on the long game.</p>
+                </ImgCard>
               </div>
             </div>
           </div>
